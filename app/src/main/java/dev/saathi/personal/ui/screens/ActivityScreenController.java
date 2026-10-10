@@ -55,7 +55,7 @@ public class ActivityScreenController {
                 ViewGroup.LayoutParams.MATCH_PARENT
         ));
         rootView.setFillViewport(true);
-        rootView.setBackgroundColor(0xFF05070B);
+        rootView.setBackgroundColor(0xFFF7F7F5);
 
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -65,14 +65,14 @@ public class ActivityScreenController {
         TextView title = new TextView(activity);
         title.setText("SECURITY AUDIT & ACTIVITY");
         title.setTextSize(22);
-        title.setTextColor(0xFFFFFFFF);
+        title.setTextColor(0xFF141414);
         title.setTypeface(null, android.graphics.Typeface.BOLD);
         layout.addView(title);
 
         TextView sub = new TextView(activity);
         sub.setText("Chronological telemetry and forensic timeline stored locally on-device");
         sub.setTextSize(13);
-        sub.setTextColor(0xFF94A3B8);
+        sub.setTextColor(0xFF666666);
         LinearLayout.LayoutParams sp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -85,8 +85,8 @@ public class ActivityScreenController {
         // 2. Search Bar
         etSearch = new EditText(activity);
         etSearch.setHint("🔍 Search alerts, DEX hooks, domains...");
-        etSearch.setHintTextColor(0xFF64748B);
-        etSearch.setTextColor(0xFFFFFFFF);
+        etSearch.setHintTextColor(0xFF888888);
+        etSearch.setTextColor(0xFF141414);
         etSearch.setTextSize(13);
         etSearch.setBackgroundResource(R.drawable.bg_input_field);
         etSearch.setPadding((int) (16 * density), (int) (12 * density), (int) (16 * density), (int) (12 * density));
@@ -133,7 +133,7 @@ public class ActivityScreenController {
         tvEmptyState.setText("✅ NO MATCHING SECURITY EVENTS\nAll monitored vectors are safe and nominal.");
         tvEmptyState.setGravity(Gravity.CENTER);
         tvEmptyState.setTextSize(14);
-        tvEmptyState.setTextColor(0xFF64748B);
+        tvEmptyState.setTextColor(0xFF888888);
         tvEmptyState.setLineSpacing(0, 1.3f);
         tvEmptyState.setPadding(0, (int) (40 * density), 0, (int) (40 * density));
         tvEmptyState.setVisibility(View.GONE);
@@ -160,11 +160,11 @@ public class ActivityScreenController {
         boolean isSelected = (selectedCategoryFilter == category);
 
         if (isSelected) {
-            chip.setTextColor(0xFF05070B);
-            chip.setBackgroundResource(R.drawable.bg_pill_emerald);
+            chip.setTextColor(0xFFFFFFFF);
+            chip.setBackgroundResource(R.drawable.bg_pill_black);
             chip.setTypeface(null, android.graphics.Typeface.BOLD);
         } else {
-            chip.setTextColor(0xFF94A3B8);
+            chip.setTextColor(0xFF666666);
             chip.setBackgroundResource(R.drawable.bg_pill_dark);
         }
 
@@ -235,8 +235,8 @@ public class ActivityScreenController {
         TextView tvCategory = new TextView(activity);
         tvCategory.setText(ev.getCategory().getDisplayName());
         tvCategory.setTextSize(10);
-        tvCategory.setTextColor(0xFF00D9F5);
-        tvCategory.setBackgroundResource(R.drawable.bg_pill_cyan);
+        tvCategory.setTextColor(0xFF141414);
+        tvCategory.setBackgroundResource(R.drawable.bg_pill_dark);
         tvCategory.setPadding((int) (8 * density), (int) (3 * density), (int) (8 * density), (int) (3 * density));
         topRow.addView(tvCategory);
 
@@ -252,13 +252,13 @@ public class ActivityScreenController {
         tvSeverity.setPadding((int) (8 * density), (int) (3 * density), (int) (8 * density), (int) (3 * density));
 
         if (ev.getSeverity() == ThreatSeverity.CRITICAL) {
-            tvSeverity.setTextColor(0xFFFF3B30);
+            tvSeverity.setTextColor(0xFFA63232);
             tvSeverity.setBackgroundResource(R.drawable.bg_pill_crimson);
         } else if (ev.getSeverity() == ThreatSeverity.HIGH) {
-            tvSeverity.setTextColor(0xFFF59E0B);
+            tvSeverity.setTextColor(0xFF855A12);
             tvSeverity.setBackgroundResource(R.drawable.bg_pill_amber);
         } else {
-            tvSeverity.setTextColor(0xFF00F5A0);
+            tvSeverity.setTextColor(0xFF386B57);
             tvSeverity.setBackgroundResource(R.drawable.bg_pill_emerald);
         }
         topRow.addView(tvSeverity);
@@ -270,7 +270,7 @@ public class ActivityScreenController {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
         tvTime.setText(sdf.format(ev.getTimestamp()));
         tvTime.setTextSize(11);
-        tvTime.setTextColor(0xFF64748B);
+        tvTime.setTextColor(0xFF888888);
         topRow.addView(tvTime);
 
         card.addView(topRow);
@@ -279,7 +279,7 @@ public class ActivityScreenController {
         TextView tvTitle = new TextView(activity);
         tvTitle.setText(ev.getTitle());
         tvTitle.setTextSize(15);
-        tvTitle.setTextColor(0xFFFFFFFF);
+        tvTitle.setTextColor(0xFF141414);
         tvTitle.setTypeface(null, android.graphics.Typeface.BOLD);
         LinearLayout.LayoutParams tp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -293,7 +293,7 @@ public class ActivityScreenController {
         TextView tvSum = new TextView(activity);
         tvSum.setText(ev.getSummary());
         tvSum.setTextSize(12);
-        tvSum.setTextColor(0xFF94A3B8);
+        tvSum.setTextColor(0xFF666666);
         tvSum.setLineSpacing(0, 1.2f);
         LinearLayout.LayoutParams sp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -307,7 +307,7 @@ public class ActivityScreenController {
         TextView tvAction = new TextView(activity);
         tvAction.setText(ev.getActionLabel() + " →");
         tvAction.setTextSize(12);
-        tvAction.setTextColor(0xFF00F5A0);
+        tvAction.setTextColor(0xFF141414);
         tvAction.setTypeface(null, android.graphics.Typeface.BOLD);
         LinearLayout.LayoutParams ap = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,

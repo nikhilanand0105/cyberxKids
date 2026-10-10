@@ -65,7 +65,7 @@ public class HomeScreenController {
                 ViewGroup.LayoutParams.MATCH_PARENT
         ));
         rootView.setFillViewport(true);
-        rootView.setBackgroundColor(0xFF05070B);
+        rootView.setBackgroundColor(0xFFF7F7F5);
 
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -117,14 +117,14 @@ public class HomeScreenController {
         tvProfileName = new TextView(activity);
         tvProfileName.setText(AppState.get().getCurrentProfile().getName());
         tvProfileName.setTextSize(13);
-        tvProfileName.setTextColor(0xFFFFFFFF);
+        tvProfileName.setTextColor(0xFF141414);
         tvProfileName.setTypeface(null, android.graphics.Typeface.BOLD);
         profilePill.addView(tvProfileName);
 
         TextView tvArrow = new TextView(activity);
         tvArrow.setText(" ▾");
         tvArrow.setTextSize(12);
-        tvArrow.setTextColor(0xFF94A3B8);
+        tvArrow.setTextColor(0xFF888888);
         profilePill.addView(tvArrow);
 
         row.addView(profilePill);
@@ -139,7 +139,7 @@ public class HomeScreenController {
         TextView tvHwBadge = new TextView(activity);
         tvHwBadge.setText("144Hz • Snapdragon 8 Elite");
         tvHwBadge.setTextSize(11);
-        tvHwBadge.setTextColor(0xFF00F5A0);
+        tvHwBadge.setTextColor(0xFF386B57);
         tvHwBadge.setBackgroundResource(R.drawable.bg_pill_emerald);
         tvHwBadge.setPadding((int) (10 * density), (int) (6 * density), (int) (10 * density), (int) (6 * density));
         row.addView(tvHwBadge);
@@ -150,7 +150,7 @@ public class HomeScreenController {
     private View buildHeroScoreCard() {
         LinearLayout card = new LinearLayout(activity);
         card.setOrientation(LinearLayout.VERTICAL);
-        card.setBackgroundResource(R.drawable.bg_card_glow_emerald);
+        card.setBackgroundResource(R.drawable.bg_card_cred);
         card.setPadding((int) (22 * density), (int) (22 * density), (int) (22 * density), (int) (22 * density));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -162,7 +162,7 @@ public class HomeScreenController {
         TextView label = new TextView(activity);
         label.setText("CYBER DEFENSE SCORE");
         label.setTextSize(11);
-        label.setTextColor(0xFF00F5A0);
+        label.setTextColor(0xFF888888);
         label.setTypeface(null, android.graphics.Typeface.BOLD);
         card.addView(label);
 
@@ -179,14 +179,14 @@ public class HomeScreenController {
         tvScoreNumber = new TextView(activity);
         tvScoreNumber.setText(String.valueOf(AppState.get().getSafetyScore()));
         tvScoreNumber.setTextSize(48);
-        tvScoreNumber.setTextColor(0xFFFFFFFF);
+        tvScoreNumber.setTextColor(0xFF141414);
         tvScoreNumber.setTypeface(null, android.graphics.Typeface.BOLD);
         scoreRow.addView(tvScoreNumber);
 
         TextView tvScale = new TextView(activity);
         tvScale.setText(" / 100");
         tvScale.setTextSize(20);
-        tvScale.setTextColor(0xFF64748B);
+        tvScale.setTextColor(0xFF888888);
         LinearLayout.LayoutParams scParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -201,7 +201,7 @@ public class HomeScreenController {
         tvScoreLabel = new TextView(activity);
         tvScoreLabel.setText("OPTIMAL • ALL SECURITY VECTORS SECURED");
         tvScoreLabel.setTextSize(13);
-        tvScoreLabel.setTextColor(0xFFE2E8F0);
+        tvScoreLabel.setTextColor(0xFF386B57);
         tvScoreLabel.setTypeface(null, android.graphics.Typeface.BOLD);
         LinearLayout.LayoutParams slParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -214,7 +214,7 @@ public class HomeScreenController {
         tvScoreSub = new TextView(activity);
         tvScoreSub.setText("Zero unverified sideloads • Child secrecy guardian armed • NPU isolated");
         tvScoreSub.setTextSize(12);
-        tvScoreSub.setTextColor(0xFF94A3B8);
+        tvScoreSub.setTextColor(0xFF666666);
         LinearLayout.LayoutParams subParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -239,7 +239,7 @@ public class HomeScreenController {
         TextView sectionTitle = new TextView(activity);
         sectionTitle.setText("ACTIVE DEFENSE MATRIX");
         sectionTitle.setTextSize(12);
-        sectionTitle.setTextColor(0xFF94A3B8);
+        sectionTitle.setTextColor(0xFF888888);
         sectionTitle.setTypeface(null, android.graphics.Typeface.BOLD);
         sectionTitle.setPadding(0, 0, 0, (int) (10 * density));
         container.addView(sectionTitle);
@@ -259,7 +259,7 @@ public class HomeScreenController {
                 "🛡️ APK SHIELD",
                 "Reverse Engineering",
                 "ARM64 Offline Scanner",
-                0xFF00F5A0,
+                0xFF386B57,
                 R.drawable.bg_card_cred,
                 v -> AppState.get().setCurrentTab(NavigationTab.INSIGHTS)
         );
@@ -273,7 +273,7 @@ public class HomeScreenController {
                 "👁️ SENSE AI",
                 "Child Online Safety",
                 "Grooming & Secrecy Cues",
-                0xFF8B5CF6,
+                0xFF141414,
                 R.drawable.bg_card_cred,
                 v -> AppState.get().setCurrentTab(NavigationTab.INSIGHTS)
         );
@@ -297,7 +297,7 @@ public class HomeScreenController {
                 "🌐 LOCAL FIREWALL",
                 "Traffic Guard",
                 "0 Cloud Relays • DNS Shield",
-                0xFF00D9F5,
+                0xFF141414,
                 R.drawable.bg_card_cred,
                 v -> AppState.get().setCurrentTab(NavigationTab.INSIGHTS)
         );
@@ -311,7 +311,7 @@ public class HomeScreenController {
                 "🚨 HELPLINE 1930",
                 "National Response",
                 "Instant Fraud Freeze",
-                0xFFF59E0B,
+                0xFF855A12,
                 R.drawable.bg_card_glow_amber,
                 v -> dial1930()
         );
@@ -342,7 +342,7 @@ public class HomeScreenController {
         TextView tvTitle = new TextView(activity);
         tvTitle.setText(title);
         tvTitle.setTextSize(14);
-        tvTitle.setTextColor(0xFFFFFFFF);
+        tvTitle.setTextColor(0xFF141414);
         tvTitle.setTypeface(null, android.graphics.Typeface.BOLD);
         LinearLayout.LayoutParams tp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -355,7 +355,7 @@ public class HomeScreenController {
         TextView tvSub = new TextView(activity);
         tvSub.setText(subtitle);
         tvSub.setTextSize(11);
-        tvSub.setTextColor(0xFF94A3B8);
+        tvSub.setTextColor(0xFF666666);
         LinearLayout.LayoutParams sp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -382,14 +382,14 @@ public class HomeScreenController {
         TextView title = new TextView(activity);
         title.setText("ON-DEVICE TESTING SUITE (IQOO 15)");
         title.setTextSize(11);
-        title.setTextColor(0xFF00D9F5);
+        title.setTextColor(0xFF141414);
         title.setTypeface(null, android.graphics.Typeface.BOLD);
         dock.addView(title);
 
         TextView desc = new TextView(activity);
         desc.setText("Execute real live security tests directly on Qualcomm Snapdragon 8 Elite:");
         desc.setTextSize(12);
-        desc.setTextColor(0xFFCBD5E1);
+        desc.setTextColor(0xFF666666);
         LinearLayout.LayoutParams dp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -406,7 +406,7 @@ public class HomeScreenController {
         Button btnTrojan = new Button(activity);
         btnTrojan.setText("⚡ Test Trojan APK");
         btnTrojan.setTextSize(12);
-        btnTrojan.setTextColor(0xFFFF3B30);
+        btnTrojan.setTextColor(0xFFA63232);
         btnTrojan.setBackgroundResource(R.drawable.bg_pill_crimson);
         btnTrojan.setOnClickListener(v -> testSyntheticApk(true));
         LinearLayout.LayoutParams p1 = new LinearLayout.LayoutParams(0, (int) (44 * density), 1f);
@@ -417,7 +417,7 @@ public class HomeScreenController {
         Button btnClean = new Button(activity);
         btnClean.setText("🛡️ Test Clean APK");
         btnClean.setTextSize(12);
-        btnClean.setTextColor(0xFF00F5A0);
+        btnClean.setTextColor(0xFF386B57);
         btnClean.setBackgroundResource(R.drawable.bg_pill_emerald);
         btnClean.setOnClickListener(v -> testSyntheticApk(false));
         LinearLayout.LayoutParams p2 = new LinearLayout.LayoutParams(0, (int) (44 * density), 1f);
@@ -440,8 +440,8 @@ public class HomeScreenController {
         Button btnPhish = new Button(activity);
         btnPhish.setText("🌐 Test Phishing Link");
         btnPhish.setTextSize(12);
-        btnPhish.setTextColor(0xFF00D9F5);
-        btnPhish.setBackgroundResource(R.drawable.bg_pill_cyan);
+        btnPhish.setTextColor(0xFF141414);
+        btnPhish.setBackgroundResource(R.drawable.bg_pill_dark);
         btnPhish.setOnClickListener(v -> testPhishingLink());
         LinearLayout.LayoutParams p3 = new LinearLayout.LayoutParams(0, (int) (44 * density), 1f);
         p3.rightMargin = (int) (6 * density);
@@ -451,7 +451,7 @@ public class HomeScreenController {
         Button btnSos = new Button(activity);
         btnSos.setText("📞 Call 1930 Helpline");
         btnSos.setTextSize(12);
-        btnSos.setTextColor(0xFFF59E0B);
+        btnSos.setTextColor(0xFF855A12);
         btnSos.setBackgroundResource(R.drawable.bg_pill_amber);
         btnSos.setOnClickListener(v -> dial1930());
         LinearLayout.LayoutParams p4 = new LinearLayout.LayoutParams(0, (int) (44 * density), 1f);
@@ -476,7 +476,7 @@ public class HomeScreenController {
         TextView title = new TextView(activity);
         title.setText("RECENT SECURITY TIMELINE");
         title.setTextSize(12);
-        title.setTextColor(0xFF94A3B8);
+        title.setTextColor(0xFF888888);
         title.setTypeface(null, android.graphics.Typeface.BOLD);
         LinearLayout.LayoutParams tp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
         title.setLayoutParams(tp);
@@ -485,7 +485,7 @@ public class HomeScreenController {
         TextView tvViewAll = new TextView(activity);
         tvViewAll.setText("View All (4) →");
         tvViewAll.setTextSize(12);
-        tvViewAll.setTextColor(0xFF00D9F5);
+        tvViewAll.setTextColor(0xFF141414);
         tvViewAll.setTypeface(null, android.graphics.Typeface.BOLD);
         tvViewAll.setOnClickListener(v -> AppState.get().setCurrentTab(NavigationTab.ACTIVITY));
         headerRow.addView(tvViewAll);
@@ -534,8 +534,8 @@ public class HomeScreenController {
         TextView badge = new TextView(activity);
         badge.setText(ev.getCategory().getDisplayName());
         badge.setTextSize(10);
-        badge.setTextColor(ev.getSeverity() == ThreatSeverity.CRITICAL ? 0xFFFF3B30 : 0xFF00D9F5);
-        badge.setBackgroundResource(ev.getSeverity() == ThreatSeverity.CRITICAL ? R.drawable.bg_pill_crimson : R.drawable.bg_pill_cyan);
+        badge.setTextColor(ev.getSeverity() == ThreatSeverity.CRITICAL ? 0xFFA63232 : 0xFF141414);
+        badge.setBackgroundResource(ev.getSeverity() == ThreatSeverity.CRITICAL ? R.drawable.bg_pill_crimson : R.drawable.bg_pill_dark);
         badge.setPadding((int) (8 * density), (int) (2 * density), (int) (8 * density), (int) (2 * density));
         top.addView(badge);
 
@@ -545,7 +545,7 @@ public class HomeScreenController {
         TextView time = new TextView(activity);
         time.setText("Just now");
         time.setTextSize(11);
-        time.setTextColor(0xFF64748B);
+        time.setTextColor(0xFF888888);
         top.addView(time);
 
         item.addView(top);
@@ -553,7 +553,7 @@ public class HomeScreenController {
         TextView title = new TextView(activity);
         title.setText(ev.getTitle());
         title.setTextSize(14);
-        title.setTextColor(0xFFFFFFFF);
+        title.setTextColor(0xFF141414);
         title.setTypeface(null, android.graphics.Typeface.BOLD);
         LinearLayout.LayoutParams tp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -566,7 +566,7 @@ public class HomeScreenController {
         TextView sub = new TextView(activity);
         sub.setText(ev.getSummary());
         sub.setTextSize(12);
-        sub.setTextColor(0xFF94A3B8);
+        sub.setTextColor(0xFF666666);
         LinearLayout.LayoutParams sp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT

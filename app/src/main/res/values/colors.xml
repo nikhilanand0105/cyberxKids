@@ -1,54 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- CRED-Inspired Luxury Noir Palette -->
-    <!-- Surfaces -->
-    <color name="bg_obsidian">#05070B</color>
-    <color name="bg_void">#080C14</color>
-    <color name="surface_charcoal">#0E1420</color>
-    <color name="surface_card">#121927</color>
-    <color name="surface_elevated">#172235</color>
-    <color name="surface_interactive">#1D2A42</color>
+    <!-- CRED-Inspired Premium Monochrome Light Theme Palette -->
+    <!-- Core Surface & Canvas Tokens -->
+    <color name="primary_background">#F7F7F5</color>
+    <color name="main_surface">#FFFFFF</color>
+    <color name="secondary_surface">#F0F0EE</color>
 
-    <!-- Borders & Dividers -->
-    <color name="border_subtle">#1E2C42</color>
-    <color name="border_medium">#2B3D5B</color>
-    <color name="border_active">#3B82F6</color>
+    <!-- Typography Tokens -->
+    <color name="primary_text">#141414</color>
+    <color name="secondary_text">#666666</color>
+    <color name="muted_text">#888888</color>
 
-    <!-- High-Voltage CRED Accents -->
-    <color name="neon_emerald">#00F5A0</color>
-    <color name="neon_emerald_dim">#1A00F5A0</color>
-    <color name="emerald_surface">#062D20</color>
+    <!-- Structural Separators & Borders -->
+    <color name="primary_border">#E5E5E2</color>
+    <color name="border_subtle">#E5E5E2</color>
+    <color name="border_medium">#D4D4D0</color>
 
-    <color name="cyber_cyan">#00D9F5</color>
-    <color name="cyber_cyan_dim">#1A00D9F5</color>
-    <color name="cyan_surface">#042633</color>
+    <!-- Primary Action (Solid Monochrome Black) -->
+    <color name="primary_action">#151515</color>
+    <color name="primary_action_text">#FFFFFF</color>
 
-    <color name="electric_purple">#8B5CF6</color>
-    <color name="electric_purple_dim">#1A8B5CF6</color>
-    <color name="purple_surface">#22163B</color>
+    <!-- Restrained Semantic Accents -->
+    <color name="restrained_accent">#386B57</color>
+    <color name="success_background">#EAF3ED</color>
+    <color name="success_text">#386B57</color>
+    <color name="success_border">#D1E4D6</color>
 
-    <color name="warning_amber">#F59E0B</color>
-    <color name="warning_amber_dim">#1AF59E0B</color>
-    <color name="amber_surface">#3D2504</color>
+    <color name="warning_background">#F8F0DF</color>
+    <color name="warning_text">#855A12</color>
+    <color name="warning_border">#EADEC4</color>
 
-    <color name="alert_crimson">#FF3B30</color>
-    <color name="alert_crimson_dim">#1AFF3B30</color>
-    <color name="crimson_surface">#3B0D0B</color>
+    <color name="danger_background">#F8EAE8</color>
+    <color name="danger_text">#A63232</color>
+    <color name="danger_border">#EBCFCB</color>
 
-    <!-- Typography -->
-    <color name="text_pure_white">#FFFFFF</color>
-    <color name="text_platinum">#E2E8F0</color>
-    <color name="text_slate">#94A3B8</color>
-    <color name="text_muted_blue">#64748B</color>
-    <color name="text_dim">#475569</color>
+    <!-- Backward-compatibility aliases mapped cleanly to light palette -->
+    <color name="bg_obsidian">#F7F7F5</color>
+    <color name="bg_void">#F0F0EE</color>
+    <color name="surface_charcoal">#FFFFFF</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="surface_elevated">#FFFFFF</color>
+    <color name="surface_interactive">#F0F0EE</color>
 
-    <!-- Legacy aliases for backward compatibility -->
-    <color name="primary">#8B5CF6</color>
-    <color name="primary_dark">#05070B</color>
-    <color name="accent">#00F5A0</color>
-    <color name="background_dark">#05070B</color>
-    <color name="text_white">#FFFFFF</color>
-    <color name="text_muted">#94A3B8</color>
-    <color name="danger">#FF3B30</color>
-    <color name="success">#00F5A0</color>
+    <color name="text_pure_white">#141414</color>
+    <color name="text_platinum">#141414</color>
+    <color name="text_slate">#666666</color>
+    <color name="text_muted_blue">#888888</color>
+    <color name="text_dim">#888888</color>
+
+    <color name="neon_emerald">#386B57</color>
+    <color name="neon_emerald_dim">#EAF3ED</color>
+    <color name="cyber_cyan">#151515</color>
+    <color name="cyber_cyan_dim">#F0F0EE</color>
+    <color name="electric_purple">#4A4A4A</color>
+    <color name="electric_purple_dim">#F0F0EE</color>
+    <color name="warning_amber">#855A12</color>
+    <color name="warning_amber_dim">#F8F0DF</color>
+    <color name="alert_crimson">#A63232</color>
+    <color name="alert_crimson_dim">#F8EAE8</color>
+
+    <color name="primary">#151515</color>
+    <color name="primary_dark">#F7F7F5</color>
+    <color name="accent">#386B57</color>
+    <color name="background_dark">#F7F7F5</color>
+    <color name="text_white">#141414</color>
+    <color name="text_muted">#666666</color>
+    <color name="danger">#A63232</color>
+    <color name="success">#386B57</color>
 </resources>

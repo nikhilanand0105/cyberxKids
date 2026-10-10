@@ -49,7 +49,7 @@ public class AssistantScreenController {
                 ViewGroup.LayoutParams.MATCH_PARENT
         ));
         rootView.setFillViewport(true);
-        rootView.setBackgroundColor(0xFF05070B);
+        rootView.setBackgroundColor(0xFFF7F7F5);
 
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -93,14 +93,14 @@ public class AssistantScreenController {
         TextView title = new TextView(activity);
         title.setText("SAATHI AI GUARDIAN COPILOT");
         title.setTextSize(22);
-        title.setTextColor(0xFFFFFFFF);
+        title.setTextColor(0xFF141414);
         title.setTypeface(null, android.graphics.Typeface.BOLD);
         header.addView(title);
 
         TextView sub = new TextView(activity);
         sub.setText("Conversational security intelligence running privately on Snapdragon 8 Elite NPU");
         sub.setTextSize(13);
-        sub.setTextColor(0xFF94A3B8);
+        sub.setTextColor(0xFF666666);
         LinearLayout.LayoutParams sp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -112,7 +112,7 @@ public class AssistantScreenController {
         TextView tvPrivacy = new TextView(activity);
         tvPrivacy.setText("🔒 ZERO CLOUD TELEMETRY • NPU ISOLATED • 100% PRIVATE");
         tvPrivacy.setTextSize(10);
-        tvPrivacy.setTextColor(0xFF00F5A0);
+        tvPrivacy.setTextColor(0xFF386B57);
         tvPrivacy.setBackgroundResource(R.drawable.bg_pill_emerald);
         tvPrivacy.setPadding((int) (10 * density), (int) (5 * density), (int) (10 * density), (int) (5 * density));
         LinearLayout.LayoutParams pp = new LinearLayout.LayoutParams(
@@ -154,8 +154,8 @@ public class AssistantScreenController {
         Button chip = new Button(activity);
         chip.setText(label);
         chip.setTextSize(11);
-        chip.setTextColor(0xFF00D9F5);
-        chip.setBackgroundResource(R.drawable.bg_pill_cyan);
+        chip.setTextColor(0xFF141414);
+        chip.setBackgroundResource(R.drawable.bg_pill_dark);
         chip.setOnClickListener(v -> sendMessage(prompt));
 
         LinearLayout.LayoutParams cp = new LinearLayout.LayoutParams(
@@ -174,8 +174,8 @@ public class AssistantScreenController {
 
         etInput = new EditText(activity);
         etInput.setHint("Ask Saathi anything about digital safety...");
-        etInput.setHintTextColor(0xFF64748B);
-        etInput.setTextColor(0xFFFFFFFF);
+        etInput.setHintTextColor(0xFF888888);
+        etInput.setTextColor(0xFF141414);
         etInput.setTextSize(13);
         etInput.setBackgroundResource(R.drawable.bg_input_field);
         etInput.setPadding((int) (14 * density), (int) (12 * density), (int) (14 * density), (int) (12 * density));
@@ -187,8 +187,8 @@ public class AssistantScreenController {
         Button btnSend = new Button(activity);
         btnSend.setText("Send");
         btnSend.setTextSize(13);
-        btnSend.setTextColor(0xFF05070B);
-        btnSend.setBackgroundResource(R.drawable.bg_pill_cyan);
+        btnSend.setTextColor(0xFFFFFFFF);
+        btnSend.setBackgroundResource(R.drawable.bg_pill_black);
         btnSend.setTypeface(null, android.graphics.Typeface.BOLD);
         btnSend.setOnClickListener(v -> {
             String text = etInput.getText().toString().trim();
@@ -240,22 +240,22 @@ public class AssistantScreenController {
         bubble.setLayoutParams(bp);
 
         if (msg.isUser) {
-            bubble.setBackgroundResource(R.drawable.bg_pill_cyan);
+            bubble.setBackgroundResource(R.drawable.bg_pill_black);
         } else {
-            bubble.setBackgroundResource(R.drawable.bg_card_elevated);
+            bubble.setBackgroundResource(R.drawable.bg_card_cred);
         }
 
         TextView tvSender = new TextView(activity);
         tvSender.setText(msg.badge);
         tvSender.setTextSize(10);
-        tvSender.setTextColor(msg.isUser ? 0xFF05070B : 0xFF00F5A0);
+        tvSender.setTextColor(msg.isUser ? 0xFFFFFFFF : 0xFF386B57);
         tvSender.setTypeface(null, android.graphics.Typeface.BOLD);
         bubble.addView(tvSender);
 
         TextView tvText = new TextView(activity);
         tvText.setText(msg.text);
         tvText.setTextSize(13);
-        tvText.setTextColor(msg.isUser ? 0xFF05070B : 0xFFFFFFFF);
+        tvText.setTextColor(msg.isUser ? 0xFFFFFFFF : 0xFF141414);
         tvText.setLineSpacing(0, 1.25f);
         LinearLayout.LayoutParams tp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -269,7 +269,7 @@ public class AssistantScreenController {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
         tvTime.setText(sdf.format(msg.timestamp));
         tvTime.setTextSize(9);
-        tvTime.setTextColor(msg.isUser ? 0xFF1E293B : 0xFF64748B);
+        tvTime.setTextColor(msg.isUser ? 0xFFCCCCCC : 0xFF888888);
         LinearLayout.LayoutParams tmp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT

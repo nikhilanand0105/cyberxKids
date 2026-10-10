@@ -36,7 +36,7 @@ public class DetailSheetDialog {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
         ));
-        scrollView.setBackgroundColor(0xFF0E1420);
+        scrollView.setBackgroundResource(R.drawable.bg_bottom_sheet);
 
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -48,7 +48,7 @@ public class DetailSheetDialog {
         pillParams.gravity = Gravity.CENTER_HORIZONTAL;
         pillParams.bottomMargin = (int) (18 * density);
         dragPill.setLayoutParams(pillParams);
-        dragPill.setBackgroundColor(0xFF2B3D5B);
+        dragPill.setBackgroundColor(0xFFE5E5E2);
         layout.addView(dragPill);
 
         // Header: Category badge & severity
@@ -59,9 +59,9 @@ public class DetailSheetDialog {
         TextView tvCategory = new TextView(context);
         tvCategory.setText(event.getCategory().getDisplayName().toUpperCase(Locale.ROOT));
         tvCategory.setTextSize(11);
-        tvCategory.setTextColor(0xFF00D9F5);
+        tvCategory.setTextColor(0xFF141414);
         tvCategory.setPadding((int) (10 * density), (int) (4 * density), (int) (10 * density), (int) (4 * density));
-        tvCategory.setBackgroundResource(R.drawable.bg_pill_cyan);
+        tvCategory.setBackgroundResource(R.drawable.bg_pill_dark);
         badgeRow.addView(tvCategory);
 
         TextView tvSeverity = new TextView(context);
@@ -76,13 +76,13 @@ public class DetailSheetDialog {
         tvSeverity.setPadding((int) (10 * density), (int) (4 * density), (int) (10 * density), (int) (4 * density));
 
         if (event.getSeverity() == ThreatSeverity.CRITICAL) {
-            tvSeverity.setTextColor(0xFFFF3B30);
+            tvSeverity.setTextColor(0xFFA63232);
             tvSeverity.setBackgroundResource(R.drawable.bg_pill_crimson);
         } else if (event.getSeverity() == ThreatSeverity.HIGH) {
-            tvSeverity.setTextColor(0xFFF59E0B);
+            tvSeverity.setTextColor(0xFF855A12);
             tvSeverity.setBackgroundResource(R.drawable.bg_pill_amber);
         } else {
-            tvSeverity.setTextColor(0xFF00F5A0);
+            tvSeverity.setTextColor(0xFF386B57);
             tvSeverity.setBackgroundResource(R.drawable.bg_pill_emerald);
         }
         badgeRow.addView(tvSeverity);
@@ -93,7 +93,7 @@ public class DetailSheetDialog {
         TextView tvTitle = new TextView(context);
         tvTitle.setText(event.getTitle());
         tvTitle.setTextSize(20);
-        tvTitle.setTextColor(0xFFFFFFFF);
+        tvTitle.setTextColor(0xFF141414);
         tvTitle.setTypeface(null, android.graphics.Typeface.BOLD);
         LinearLayout.LayoutParams titleParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -108,7 +108,7 @@ public class DetailSheetDialog {
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault());
         tvTime.setText("Timestamp: " + sdf.format(event.getTimestamp()) + " • Snapdragon 8 Elite Verified");
         tvTime.setTextSize(12);
-        tvTime.setTextColor(0xFF64748B);
+        tvTime.setTextColor(0xFF888888);
         LinearLayout.LayoutParams timeParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -132,14 +132,14 @@ public class DetailSheetDialog {
         TextView sumLabel = new TextView(context);
         sumLabel.setText("ANALYSIS SUMMARY");
         sumLabel.setTextSize(11);
-        sumLabel.setTextColor(0xFF94A3B8);
+        sumLabel.setTextColor(0xFF888888);
         sumLabel.setTypeface(null, android.graphics.Typeface.BOLD);
         summaryCard.addView(sumLabel);
 
         TextView sumText = new TextView(context);
         sumText.setText(event.getSummary());
         sumText.setTextSize(14);
-        sumText.setTextColor(0xFFE2E8F0);
+        sumText.setTextColor(0xFF141414);
         sumText.setLineSpacing(0, 1.25f);
         LinearLayout.LayoutParams stParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -166,7 +166,7 @@ public class DetailSheetDialog {
         TextView evLabel = new TextView(context);
         evLabel.setText("EVIDENCE & REVERSE-ENGINEERING PROOF");
         evLabel.setTextSize(11);
-        evLabel.setTextColor(0xFF00D9F5);
+        evLabel.setTextColor(0xFF141414);
         evLabel.setTypeface(null, android.graphics.Typeface.BOLD);
         evCard.addView(evLabel);
 
@@ -174,7 +174,7 @@ public class DetailSheetDialog {
             TextView detailLine = new TextView(context);
             detailLine.setText("• " + detail);
             detailLine.setTextSize(12);
-            detailLine.setTextColor(0xFFCBD5E1);
+            detailLine.setTextColor(0xFF666666);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
@@ -199,8 +199,8 @@ public class DetailSheetDialog {
         Button btnPrimaryAction = new Button(context);
         btnPrimaryAction.setText(event.getActionLabel());
         btnPrimaryAction.setTextSize(14);
-        btnPrimaryAction.setTextColor(0xFF05070B);
-        btnPrimaryAction.setBackgroundResource(R.drawable.bg_pill_emerald);
+        btnPrimaryAction.setTextColor(0xFFFFFFFF);
+        btnPrimaryAction.setBackgroundResource(R.drawable.bg_pill_black);
         btnPrimaryAction.setTypeface(null, android.graphics.Typeface.BOLD);
         btnPrimaryAction.setOnClickListener(v -> {
             event.setResolved(true);
@@ -213,7 +213,7 @@ public class DetailSheetDialog {
         Button btnDismiss = new Button(context);
         btnDismiss.setText("Close Inspection");
         btnDismiss.setTextSize(13);
-        btnDismiss.setTextColor(0xFF94A3B8);
+        btnDismiss.setTextColor(0xFF666666);
         btnDismiss.setBackgroundColor(Color.TRANSPARENT);
         LinearLayout.LayoutParams dismissParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,

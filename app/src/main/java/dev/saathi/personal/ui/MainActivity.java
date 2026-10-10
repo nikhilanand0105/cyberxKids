@@ -77,6 +77,19 @@ public class MainActivity extends Activity {
         // Hardware Optimization: 144Hz LTPO AMOLED sync for iQOO 15 (Snapdragon 8 Elite)
         optimizeDisplayForIqoo15();
 
+        // Enforce Light Status Bar and Light Navigation Bar (Dark Icons)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decor = getWindow().getDecorView();
+            int flags = decor.getSystemUiVisibility();
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            }
+            decor.setSystemUiVisibility(flags);
+            getWindow().setStatusBarColor(0xFFF7F7F5);
+            getWindow().setNavigationBarColor(0xFFFFFFFF);
+        }
+
         setContentView(R.layout.activity_main);
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -192,23 +205,28 @@ public class MainActivity extends Activity {
     }
 
     private void updateNavHighlight(NavigationTab tab) {
-        int activeColor = 0xFF00F5A0; // Neon Emerald
-        int inactiveColor = 0xFF64748B; // Slate Muted
+        int activeColor = 0xFF141414; // Solid Monochrome Black
+        int inactiveColor = 0xFF888888; // Muted Neutral Grey
 
         ivNavHome.setColorFilter(tab == NavigationTab.HOME ? activeColor : inactiveColor);
         tvNavHome.setTextColor(tab == NavigationTab.HOME ? activeColor : inactiveColor);
+        tvNavHome.setTypeface(null, tab == NavigationTab.HOME ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
 
         ivNavInsights.setColorFilter(tab == NavigationTab.INSIGHTS ? activeColor : inactiveColor);
         tvNavInsights.setTextColor(tab == NavigationTab.INSIGHTS ? activeColor : inactiveColor);
+        tvNavInsights.setTypeface(null, tab == NavigationTab.INSIGHTS ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
 
         ivNavActivity.setColorFilter(tab == NavigationTab.ACTIVITY ? activeColor : inactiveColor);
         tvNavActivity.setTextColor(tab == NavigationTab.ACTIVITY ? activeColor : inactiveColor);
+        tvNavActivity.setTypeface(null, tab == NavigationTab.ACTIVITY ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
 
         ivNavAssistant.setColorFilter(tab == NavigationTab.ASSISTANT ? activeColor : inactiveColor);
         tvNavAssistant.setTextColor(tab == NavigationTab.ASSISTANT ? activeColor : inactiveColor);
+        tvNavAssistant.setTypeface(null, tab == NavigationTab.ASSISTANT ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
 
         ivNavGuardian.setColorFilter(tab == NavigationTab.GUARDIAN ? activeColor : inactiveColor);
         tvNavGuardian.setTextColor(tab == NavigationTab.GUARDIAN ? activeColor : inactiveColor);
+        tvNavGuardian.setTypeface(null, tab == NavigationTab.GUARDIAN ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
     }
 
     private void performHaptic() {

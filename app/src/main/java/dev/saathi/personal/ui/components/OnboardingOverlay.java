@@ -49,7 +49,7 @@ public class OnboardingOverlay {
                 ViewGroup.LayoutParams.MATCH_PARENT
         ));
         rootView.setOrientation(LinearLayout.VERTICAL);
-        rootView.setBackgroundColor(0xF505070B);
+        rootView.setBackgroundColor(0xF0F7F7F5);
         rootView.setGravity(Gravity.CENTER);
         rootView.setPadding((int) (24 * density), (int) (24 * density), (int) (24 * density), (int) (24 * density));
 
@@ -65,14 +65,14 @@ public class OnboardingOverlay {
         tvStepIndicator = new TextView(activity);
         tvStepIndicator.setText("STEP 1 OF 3 • SAATHI GUARDIAN SETUP");
         tvStepIndicator.setTextSize(11);
-        tvStepIndicator.setTextColor(0xFF00D9F5);
+        tvStepIndicator.setTextColor(0xFF386B57);
         tvStepIndicator.setTypeface(null, android.graphics.Typeface.BOLD);
         card.addView(tvStepIndicator);
 
         tvTitle = new TextView(activity);
         tvTitle.setText("AI Child Safety & Cybersecurity");
         tvTitle.setTextSize(22);
-        tvTitle.setTextColor(0xFFFFFFFF);
+        tvTitle.setTextColor(0xFF141414);
         tvTitle.setTypeface(null, android.graphics.Typeface.BOLD);
         LinearLayout.LayoutParams tp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -85,7 +85,7 @@ public class OnboardingOverlay {
         tvDesc = new TextView(activity);
         tvDesc.setText("Saathi protects your children and elderly parents from predatory online grooming, banking trojans, and fraudulent payment links on iQOO 15.");
         tvDesc.setTextSize(13);
-        tvDesc.setTextColor(0xFF94A3B8);
+        tvDesc.setTextColor(0xFF666666);
         tvDesc.setLineSpacing(0, 1.3f);
         LinearLayout.LayoutParams dp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -109,8 +109,8 @@ public class OnboardingOverlay {
         btnAction = new Button(activity);
         btnAction.setText("Continue Setup →");
         btnAction.setTextSize(14);
-        btnAction.setTextColor(0xFF05070B);
-        btnAction.setBackgroundResource(R.drawable.bg_pill_emerald);
+        btnAction.setTextColor(0xFFFFFFFF);
+        btnAction.setBackgroundResource(R.drawable.bg_pill_black);
         btnAction.setTypeface(null, android.graphics.Typeface.BOLD);
         btnAction.setOnClickListener(v -> advanceStep());
         LinearLayout.LayoutParams bp = new LinearLayout.LayoutParams(
@@ -187,7 +187,7 @@ public class OnboardingOverlay {
         TextView tv = new TextView(activity);
         tv.setText(header + "\n" + details);
         tv.setTextSize(12);
-        tv.setTextColor(0xFFE2E8F0);
+        tv.setTextColor(0xFF141414);
         tv.setLineSpacing(0, 1.25f);
         tv.setPadding((int) (12 * density), (int) (8 * density), (int) (12 * density), (int) (8 * density));
         tv.setBackgroundResource(R.drawable.bg_pill_dark);
@@ -205,8 +205,8 @@ public class OnboardingOverlay {
         btn.setText(text);
         btn.setTextSize(13);
         boolean isSelected = (AppState.get().getCurrentProfile() == profile);
-        btn.setTextColor(isSelected ? 0xFF05070B : 0xFFFFFFFF);
-        btn.setBackgroundResource(isSelected ? R.drawable.bg_pill_emerald : R.drawable.bg_pill_dark);
+        btn.setTextColor(isSelected ? 0xFFFFFFFF : 0xFF141414);
+        btn.setBackgroundResource(isSelected ? R.drawable.bg_pill_black : R.drawable.bg_pill_dark);
         btn.setOnClickListener(v -> {
             AppState.get().setCurrentProfile(profile);
             renderStep();

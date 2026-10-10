@@ -3,7 +3,7 @@
     android:id="@+id/root_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_obsidian"
+    android:background="@color/primary_background"
     android:fitsSystemWindows="true">
 
     <!-- Primary Dynamic Screens Container -->
@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_nav_bar" />
 
-    <!-- CRED-Style Persistent Bottom Navigation Bar -->
+    <!-- CRED-Style Persistent Monochrome Bottom Navigation Bar -->
     <LinearLayout
         android:id="@+id/bottom_nav_bar"
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_nav_home"
-                android:tint="@color/neon_emerald" />
+                android:tint="@color/primary_action" />
 
             <TextView
                 android:id="@+id/tv_nav_home"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="Home"
-                android:textColor="@color/neon_emerald"
+                android:textColor="@color/primary_action"
                 android:textSize="10sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -70,7 +70,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_nav_insights"
-                android:tint="@color/text_muted" />
+                android:tint="@color/muted_text" />
 
             <TextView
                 android:id="@+id/tv_nav_insights"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="Insights"
-                android:textColor="@color/text_muted"
+                android:textColor="@color/muted_text"
                 android:textSize="10sp" />
         </LinearLayout>
 
@@ -98,7 +98,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_nav_activity"
-                android:tint="@color/text_muted" />
+                android:tint="@color/muted_text" />
 
             <TextView
                 android:id="@+id/tv_nav_activity"
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="Activity"
-                android:textColor="@color/text_muted"
+                android:textColor="@color/muted_text"
                 android:textSize="10sp" />
         </LinearLayout>
 
@@ -126,7 +126,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_nav_assistant"
-                android:tint="@color/text_muted" />
+                android:tint="@color/muted_text" />
 
             <TextView
                 android:id="@+id/tv_nav_assistant"
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="Copilot"
-                android:textColor="@color/text_muted"
+                android:textColor="@color/muted_text"
                 android:textSize="10sp" />
         </LinearLayout>
 
@@ -154,7 +154,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_nav_guardian"
-                android:tint="@color/text_muted" />
+                android:tint="@color/muted_text" />
 
             <TextView
                 android:id="@+id/tv_nav_guardian"
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:text="Guardian"
-                android:textColor="@color/text_muted"
+                android:textColor="@color/muted_text"
                 android:textSize="10sp" />
         </LinearLayout>
 

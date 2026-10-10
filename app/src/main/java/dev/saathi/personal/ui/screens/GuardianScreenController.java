@@ -51,7 +51,7 @@ public class GuardianScreenController {
                 ViewGroup.LayoutParams.MATCH_PARENT
         ));
         rootView.setFillViewport(true);
-        rootView.setBackgroundColor(0xFF05070B);
+        rootView.setBackgroundColor(0xFFF7F7F5);
 
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -90,14 +90,14 @@ public class GuardianScreenController {
         TextView title = new TextView(activity);
         title.setText("GUARDIAN & DEVICE CONTROLS");
         title.setTextSize(22);
-        title.setTextColor(0xFFFFFFFF);
+        title.setTextColor(0xFF141414);
         title.setTypeface(null, android.graphics.Typeface.BOLD);
         header.addView(title);
 
         TextView sub = new TextView(activity);
         sub.setText("Hardware governance, trusted emergency contacts, and privacy minimization");
         sub.setTextSize(13);
-        sub.setTextColor(0xFF94A3B8);
+        sub.setTextColor(0xFF666666);
         LinearLayout.LayoutParams sp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -124,7 +124,7 @@ public class GuardianScreenController {
         TextView label = new TextView(activity);
         label.setText("MONITORED WARD PROFILE & DEVICE");
         label.setTextSize(11);
-        label.setTextColor(0xFF00D9F5);
+        label.setTextColor(0xFF888888);
         label.setTypeface(null, android.graphics.Typeface.BOLD);
         card.addView(label);
 
@@ -146,14 +146,14 @@ public class GuardianScreenController {
         tvActiveProfileName = new TextView(activity);
         tvActiveProfileName.setText(AppState.get().getCurrentProfile().getName());
         tvActiveProfileName.setTextSize(16);
-        tvActiveProfileName.setTextColor(0xFFFFFFFF);
+        tvActiveProfileName.setTextColor(0xFF141414);
         tvActiveProfileName.setTypeface(null, android.graphics.Typeface.BOLD);
         textCol.addView(tvActiveProfileName);
 
         TextView tvDev = new TextView(activity);
         tvDev.setText("Device: iQOO 15 (Android 16, SM8850) • Paired");
         tvDev.setTextSize(12);
-        tvDev.setTextColor(0xFF94A3B8);
+        tvDev.setTextColor(0xFF666666);
         textCol.addView(tvDev);
 
         row.addView(textCol);
@@ -161,8 +161,8 @@ public class GuardianScreenController {
         Button btnSwitch = new Button(activity);
         btnSwitch.setText("Switch");
         btnSwitch.setTextSize(12);
-        btnSwitch.setTextColor(0xFF00F5A0);
-        btnSwitch.setBackgroundResource(R.drawable.bg_pill_emerald);
+        btnSwitch.setTextColor(0xFFFFFFFF);
+        btnSwitch.setBackgroundResource(R.drawable.bg_pill_black);
         btnSwitch.setOnClickListener(v -> showProfileDialog());
         LinearLayout.LayoutParams bp = new LinearLayout.LayoutParams(
                 (int) (84 * density),
@@ -191,19 +191,19 @@ public class GuardianScreenController {
         TextView label = new TextView(activity);
         label.setText("ANDROID PERMISSION & HEALTH AUDIT");
         label.setTextSize(11);
-        label.setTextColor(0xFF94A3B8);
+        label.setTextColor(0xFF888888);
         label.setTypeface(null, android.graphics.Typeface.BOLD);
         section.addView(label);
 
-        section.addView(createPermRow("APK Package Inspection", "Scoped FileProvider", "SECURE", 0xFF00F5A0));
-        section.addView(createPermRow("Accessibility Abuse Guard", "Active Background Hook Monitor", "ARMED", 0xFF00F5A0));
-        section.addView(createPermRow("High Refresh Rate (144Hz)", "Window DisplayMode ID 144.0Hz", "ENABLED", 0xFF00D9F5));
-        section.addView(createPermRow("Restricted Settings Check", "Android 16 API 36 Verified", "COMPLIANT", 0xFF00F5A0));
+        section.addView(createPermRow("APK Package Inspection", "Scoped FileProvider", "SECURE", 0xFF386B57, R.drawable.bg_pill_emerald));
+        section.addView(createPermRow("Accessibility Abuse Guard", "Active Background Hook Monitor", "ARMED", 0xFF386B57, R.drawable.bg_pill_emerald));
+        section.addView(createPermRow("High Refresh Rate (144Hz)", "Window DisplayMode ID 144.0Hz", "ENABLED", 0xFF141414, R.drawable.bg_pill_dark));
+        section.addView(createPermRow("Restricted Settings Check", "Android 16 API 36 Verified", "COMPLIANT", 0xFF386B57, R.drawable.bg_pill_emerald));
 
         return section;
     }
 
-    private View createPermRow(String title, String desc, String badge, int color) {
+    private View createPermRow(String title, String desc, String badge, int color, int badgeBg) {
         LinearLayout row = new LinearLayout(activity);
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setGravity(Gravity.CENTER_VERTICAL);
@@ -222,13 +222,13 @@ public class GuardianScreenController {
         TextView t = new TextView(activity);
         t.setText(title);
         t.setTextSize(13);
-        t.setTextColor(0xFFFFFFFF);
+        t.setTextColor(0xFF141414);
         textCol.addView(t);
 
         TextView d = new TextView(activity);
         d.setText(desc);
         d.setTextSize(11);
-        d.setTextColor(0xFF64748B);
+        d.setTextColor(0xFF666666);
         textCol.addView(d);
 
         row.addView(textCol);
@@ -237,7 +237,7 @@ public class GuardianScreenController {
         b.setText(badge);
         b.setTextSize(10);
         b.setTextColor(color);
-        b.setBackgroundResource(R.drawable.bg_pill_dark);
+        b.setBackgroundResource(badgeBg);
         b.setPadding((int) (8 * density), (int) (3 * density), (int) (8 * density), (int) (3 * density));
         row.addView(b);
 
@@ -247,7 +247,7 @@ public class GuardianScreenController {
     private View buildPrivacyRetentionSection() {
         LinearLayout section = new LinearLayout(activity);
         section.setOrientation(LinearLayout.VERTICAL);
-        section.setBackgroundResource(R.drawable.bg_card_elevated);
+        section.setBackgroundResource(R.drawable.bg_card_cred);
         section.setPadding((int) (18 * density), (int) (16 * density), (int) (18 * density), (int) (16 * density));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -259,14 +259,14 @@ public class GuardianScreenController {
         TextView label = new TextView(activity);
         label.setText("LOCAL DATA MINIMIZATION & AUTO-RETENTION");
         label.setTextSize(11);
-        label.setTextColor(0xFF00D9F5);
+        label.setTextColor(0xFF888888);
         label.setTypeface(null, android.graphics.Typeface.BOLD);
         section.addView(label);
 
         tvRetentionInfo = new TextView(activity);
         tvRetentionInfo.setText("Current Retention Window: 14 Days • Auto-Pruning Enabled");
         tvRetentionInfo.setTextSize(12);
-        tvRetentionInfo.setTextColor(0xFFCBD5E1);
+        tvRetentionInfo.setTextColor(0xFF666666);
         LinearLayout.LayoutParams ip = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -280,9 +280,9 @@ public class GuardianScreenController {
         LinearLayout row = new LinearLayout(activity);
         row.setOrientation(LinearLayout.HORIZONTAL);
 
-        Button btn7 = createRetentionButton("7 Days", 7);
-        Button btn14 = createRetentionButton("14 Days (Default)", 14);
-        Button btn30 = createRetentionButton("30 Days", 30);
+        Button btn7 = createRetentionButton("7 Days", 7, false);
+        Button btn14 = createRetentionButton("14 Days (Default)", 14, true);
+        Button btn30 = createRetentionButton("30 Days", 30, false);
 
         row.addView(btn7);
         row.addView(btn14);
@@ -292,12 +292,12 @@ public class GuardianScreenController {
         return section;
     }
 
-    private Button createRetentionButton(String label, int days) {
+    private Button createRetentionButton(String label, int days, boolean isDefault) {
         Button b = new Button(activity);
         b.setText(label);
         b.setTextSize(11);
-        b.setTextColor(0xFFFFFFFF);
-        b.setBackgroundResource(R.drawable.bg_pill_dark);
+        b.setTextColor(isDefault ? 0xFFFFFFFF : 0xFF141414);
+        b.setBackgroundResource(isDefault ? R.drawable.bg_pill_black : R.drawable.bg_pill_dark);
         b.setOnClickListener(v -> {
             AppState.get().getStorageRepository().setRetentionDays(days);
             int purged = AppState.get().getStorageRepository().pruneExpiredRecords();
@@ -329,15 +329,15 @@ public class GuardianScreenController {
         TextView label = new TextView(activity);
         label.setText("TRUSTED EMERGENCY CONTACTS (RAKSHAK)");
         label.setTextSize(11);
-        label.setTextColor(0xFF00F5A0);
+        label.setTextColor(0xFF888888);
         label.setTypeface(null, android.graphics.Typeface.BOLD);
         top.addView(label, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
 
         Button btnAdd = new Button(activity);
         btnAdd.setText("+ Add");
         btnAdd.setTextSize(11);
-        btnAdd.setTextColor(0xFF00F5A0);
-        btnAdd.setBackgroundResource(R.drawable.bg_pill_emerald);
+        btnAdd.setTextColor(0xFFFFFFFF);
+        btnAdd.setBackgroundResource(R.drawable.bg_pill_black);
         btnAdd.setOnClickListener(v -> showAddHelperDialog());
         LinearLayout.LayoutParams bp = new LinearLayout.LayoutParams(
                 (int) (70 * density),
@@ -362,7 +362,7 @@ public class GuardianScreenController {
         Button btnTestSos = new Button(activity);
         btnTestSos.setText("🚨 Dispatch Test Emergency SOS");
         btnTestSos.setTextSize(12);
-        btnTestSos.setTextColor(0xFFFF3B30);
+        btnTestSos.setTextColor(0xFFA63232);
         btnTestSos.setBackgroundResource(R.drawable.bg_pill_crimson);
         btnTestSos.setOnClickListener(v -> {
             EmergencySosEvent sos = AppState.get().getStorageRepository().dispatchSos(28.6139, 77.2090, 5.0f, "Test SOS from iQOO 15 Guardian", true);
@@ -394,7 +394,7 @@ public class GuardianScreenController {
         TextView label = new TextView(activity);
         label.setText("ACCESSIBILITY & VERNACULAR PREFERENCES");
         label.setTextSize(11);
-        label.setTextColor(0xFF94A3B8);
+        label.setTextColor(0xFF888888);
         label.setTypeface(null, android.graphics.Typeface.BOLD);
         section.addView(label);
 
@@ -410,7 +410,7 @@ public class GuardianScreenController {
         btnSeniorToggle = new Button(activity);
         btnSeniorToggle.setText(AppState.get().isSeniorMode() ? "Senior Mode: ON" : "Senior Mode: OFF");
         btnSeniorToggle.setTextSize(12);
-        btnSeniorToggle.setTextColor(0xFFFFFFFF);
+        btnSeniorToggle.setTextColor(0xFF141414);
         btnSeniorToggle.setBackgroundResource(R.drawable.bg_pill_dark);
         btnSeniorToggle.setOnClickListener(v -> {
             AppState.get().setSeniorMode(!AppState.get().isSeniorMode());
@@ -425,7 +425,7 @@ public class GuardianScreenController {
         btnLangToggle = new Button(activity);
         btnLangToggle.setText(AppState.get().isHindi() ? "भाषा: हिन्दी" : "Language: English");
         btnLangToggle.setTextSize(12);
-        btnLangToggle.setTextColor(0xFFFFFFFF);
+        btnLangToggle.setTextColor(0xFF141414);
         btnLangToggle.setBackgroundResource(R.drawable.bg_pill_dark);
         btnLangToggle.setOnClickListener(v -> {
             AppState.get().setHindi(!AppState.get().isHindi());
@@ -450,14 +450,14 @@ public class GuardianScreenController {
         TextView title = new TextView(activity);
         title.setText("📞 NATIONAL CYBER CRIME HELPLINE (1930)");
         title.setTextSize(14);
-        title.setTextColor(0xFFFDE68A);
+        title.setTextColor(0xFF855A12);
         title.setTypeface(null, android.graphics.Typeface.BOLD);
         card.addView(title);
 
         TextView desc = new TextView(activity);
         desc.setText("Official Government of India portal (I4C). Call within the 'Golden Hour' to freeze fraudulent bank transactions.");
         desc.setTextSize(12);
-        desc.setTextColor(0xFFFEF3C7);
+        desc.setTextColor(0xFF666666);
         LinearLayout.LayoutParams dp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -470,8 +470,8 @@ public class GuardianScreenController {
         Button btnDial = new Button(activity);
         btnDial.setText("Call 1930 Immediately");
         btnDial.setTextSize(13);
-        btnDial.setTextColor(0xFF05070B);
-        btnDial.setBackgroundResource(R.drawable.bg_pill_amber);
+        btnDial.setTextColor(0xFFFFFFFF);
+        btnDial.setBackgroundResource(R.drawable.bg_pill_black);
         btnDial.setTypeface(null, android.graphics.Typeface.BOLD);
         btnDial.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -520,14 +520,14 @@ public class GuardianScreenController {
         TextView name = new TextView(activity);
         name.setText(h.getName() + " (" + h.getRelationship() + ")");
         name.setTextSize(13);
-        name.setTextColor(0xFFFFFFFF);
+        name.setTextColor(0xFF141414);
         name.setTypeface(null, android.graphics.Typeface.BOLD);
         textCol.addView(name);
 
         TextView phone = new TextView(activity);
         phone.setText(h.getPhoneNumber());
         phone.setTextSize(11);
-        phone.setTextColor(0xFF94A3B8);
+        phone.setTextColor(0xFF666666);
         textCol.addView(phone);
 
         row.addView(textCol);
@@ -535,7 +535,7 @@ public class GuardianScreenController {
         Button btnRemove = new Button(activity);
         btnRemove.setText("✕");
         btnRemove.setTextSize(12);
-        btnRemove.setTextColor(0xFFFF3B30);
+        btnRemove.setTextColor(0xFFA63232);
         btnRemove.setBackgroundResource(R.drawable.bg_pill_dark);
         btnRemove.setOnClickListener(v -> {
             AppState.get().getStorageRepository().removeTrustedHelper(h.getHelperId());
