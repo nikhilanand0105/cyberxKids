@@ -12,6 +12,9 @@
     <!-- Phone dialer permission for Helpline 1930 quick action in Senior Mode -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <!-- Haptic feedback for tactile CRED navigation interactions -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <!-- 
       iQOO 15 Optimization: 64-bit arm64-v8a target.
       We deliberately OMIT REQUEST_INSTALL_PACKAGES to comply with Google Play Policy.

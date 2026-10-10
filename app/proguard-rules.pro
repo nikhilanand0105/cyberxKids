@@ -5,6 +5,8 @@
 -keep class dev.saathi.storage.** { *; }
 -keep class dev.saathi.sense.** { *; }
 -keep class dev.saathi.shield.** { *; }
+-keep class dev.saathi.personal.ui.model.** { *; }
+-keep class dev.saathi.personal.ui.state.** { *; }
 
 # Preserve Android Activities and UI components
 -keep public class * extends android.app.Activity
@@ -17,6 +19,5 @@
 -keep class dev.saathi.personal.provider.SaathiFileProvider { *; }
 
 # Optimization options for 64-bit Oryon CPU
--repackageclasses
 -allowaccessmodification
 -dontwarn java.lang.invoke.**

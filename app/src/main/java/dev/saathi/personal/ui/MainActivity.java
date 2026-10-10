@@ -1,79 +1,98 @@
 package dev.saathi.personal.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import dev.saathi.ai.HindiExplanationSynthesizer;
-import dev.saathi.engine.ApkInstallHandoffHelper;
-import dev.saathi.engine.SaathiApkIntelligence;
 import dev.saathi.model.ApkAnalysisReport;
 import dev.saathi.model.ScanVerdict;
-import dev.saathi.model.ThreatIndicator;
+import dev.saathi.model.ThreatSeverity;
 import dev.saathi.personal.R;
-import dev.saathi.sense.ConversationRiskReport;
-import dev.saathi.sense.SaathiSenseEngine;
+import dev.saathi.personal.ui.components.DetailSheetDialog;
+import dev.saathi.personal.ui.components.OnboardingOverlay;
+import dev.saathi.personal.ui.model.ActivityEvent;
+import dev.saathi.personal.ui.model.NavigationTab;
+import dev.saathi.personal.ui.screens.ActivityScreenController;
+import dev.saathi.personal.ui.screens.AssistantScreenController;
+import dev.saathi.personal.ui.screens.GuardianScreenController;
+import dev.saathi.personal.ui.screens.HomeScreenController;
+import dev.saathi.personal.ui.screens.InsightsScreenController;
+import dev.saathi.personal.ui.state.AppState;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.util.ArrayDeque;
+import java.util.Date;
+import java.util.Deque;
+import java.util.List;
 
-/**
- * Main Activity for Saathi Personal on Android 16 (iQOO 15).
- * Optimized for Qualcomm Snapdragon 8 Elite, 144Hz LTPO display, and Funtouch OS power limits.
- */
 public class MainActivity extends Activity {
 
-    private boolean isSeniorMode = false;
-    private boolean isHindi = false;
+    private FrameLayout screenContainer;
+    private FrameLayout onboardingContainer;
 
-    private SaathiApkIntelligence apkEngine;
-    private SaathiSenseEngine senseEngine;
+    private LinearLayout navItemHome;
+    private LinearLayout navItemInsights;
+    private LinearLayout navItemActivity;
+    private LinearLayout navItemAssistant;
+    private LinearLayout navItemGuardian;
 
-    private TextView tvDevicePill;
-    private TextView tvTitle;
-    private TextView tvSubtitle;
-    private Button btnToggleSenior;
-    private Button btnToggleLang;
-    private Button btnCall1930;
-    private TextView tvHelplineTitle;
-    private TextView tvHelplineDesc;
-    private TextView tvVerdictBadge;
-    private TextView tvVerdictAdvice;
-    private TextView tvVerdictEvidence;
-    private Button btnInstallAction;
-    private TextView tvSenseStatus;
+    private ImageView ivNavHome;
+    private ImageView ivNavInsights;
+    private ImageView ivNavActivity;
+    private ImageView ivNavAssistant;
+    private ImageView ivNavGuardian;
 
-    private ApkAnalysisReport lastReport = null;
+    private TextView tvNavHome;
+    private TextView tvNavInsights;
+    private TextView tvNavActivity;
+    private TextView tvNavAssistant;
+    private TextView tvNavGuardian;
+
+    private HomeScreenController homeController;
+    private InsightsScreenController insightsController;
+    private ActivityScreenController activityController;
+    private AssistantScreenController assistantController;
+    private GuardianScreenController guardianController;
+
+    private final Deque<NavigationTab> navigationBackStack = new ArrayDeque<>();
+    private Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Hardware Optimization: Request 144Hz refresh rate on iQOO 15 display
+        // Hardware Optimization: 144Hz LTPO AMOLED sync for iQOO 15 (Snapdragon 8 Elite)
         optimizeDisplayForIqoo15();
 
         setContentView(R.layout.activity_main);
 
-        apkEngine = new SaathiApkIntelligence();
-        senseEngine = new SaathiSenseEngine();
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         initViews();
-        setupListeners();
+        setupScreenControllers();
+        setupNavigation();
 
-        // Check if launched via file share / ACTION_VIEW (e.g. downloaded APK from Chrome)
+        // Listen for centralized state changes (e.g. tab switches from other screens)
+        AppState.get().addListener(this::onAppStateChanged);
+
+        // Check if incoming intent (APK shared from Chrome, WhatsApp, Files)
         handleIncomingIntent(getIntent());
+
+        // Check initial tab
+        switchTab(NavigationTab.HOME, false);
     }
 
     private void optimizeDisplayForIqoo15() {
@@ -90,169 +109,141 @@ public class MainActivity extends Activity {
                         }
                     }
                 }
-                // Handle top camera hole cutout (1440x3168 display)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     params.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
                 }
                 getWindow().setAttributes(params);
-            } catch (Exception ignored) {
-            }
+            } catch (Exception ignored) {}
         }
     }
 
     private void initViews() {
-        tvDevicePill = findViewById(R.id.tv_device_pill);
-        tvTitle = findViewById(R.id.tv_title);
-        tvSubtitle = findViewById(R.id.tv_subtitle);
-        btnToggleSenior = findViewById(R.id.btn_toggle_senior);
-        btnToggleLang = findViewById(R.id.btn_toggle_lang);
-        btnCall1930 = findViewById(R.id.btn_call_1930);
-        tvHelplineTitle = findViewById(R.id.tv_helpline_title);
-        tvHelplineDesc = findViewById(R.id.tv_helpline_desc);
-        tvVerdictBadge = findViewById(R.id.tv_verdict_badge);
-        tvVerdictAdvice = findViewById(R.id.tv_verdict_advice);
-        tvVerdictEvidence = findViewById(R.id.tv_verdict_evidence);
-        btnInstallAction = findViewById(R.id.btn_install_action);
-        tvSenseStatus = findViewById(R.id.tv_sense_status);
+        screenContainer = findViewById(R.id.screen_container);
+        onboardingContainer = findViewById(R.id.onboarding_container);
 
-        // Display detected SoC and hardware
-        String socInfo = Build.HARDWARE + " (" + Build.SOC_MODEL + ")";
-        tvDevicePill.setText("⚡ iQOO 15 • Snapdragon 8 Elite (" + Build.SOC_MODEL + ") • 144Hz Active");
+        navItemHome = findViewById(R.id.nav_item_home);
+        navItemInsights = findViewById(R.id.nav_item_insights);
+        navItemActivity = findViewById(R.id.nav_item_activity);
+        navItemAssistant = findViewById(R.id.nav_item_assistant);
+        navItemGuardian = findViewById(R.id.nav_item_guardian);
+
+        ivNavHome = findViewById(R.id.iv_nav_home);
+        ivNavInsights = findViewById(R.id.iv_nav_insights);
+        ivNavActivity = findViewById(R.id.iv_nav_activity);
+        ivNavAssistant = findViewById(R.id.iv_nav_assistant);
+        ivNavGuardian = findViewById(R.id.iv_nav_guardian);
+
+        tvNavHome = findViewById(R.id.tv_nav_home);
+        tvNavInsights = findViewById(R.id.tv_nav_insights);
+        tvNavActivity = findViewById(R.id.tv_nav_activity);
+        tvNavAssistant = findViewById(R.id.tv_nav_assistant);
+        tvNavGuardian = findViewById(R.id.tv_nav_guardian);
     }
 
-    private void setupListeners() {
-        btnToggleSenior.setOnClickListener(v -> toggleSeniorMode());
-        btnToggleLang.setOnClickListener(v -> toggleLanguage());
+    private void setupScreenControllers() {
+        homeController = new HomeScreenController(this);
+        insightsController = new InsightsScreenController(this);
+        activityController = new ActivityScreenController(this);
+        assistantController = new AssistantScreenController(this);
+        guardianController = new GuardianScreenController(this);
 
-        btnCall1930.setOnClickListener(v -> {
-            Intent callIntent = new Intent(Intent.ACTION_DIAL);
-            callIntent.setData(Uri.parse("tel:1930"));
-            startActivity(callIntent);
-        });
+        // Add all 5 screens to the container
+        screenContainer.addView(homeController.getView());
+        screenContainer.addView(insightsController.getView());
+        screenContainer.addView(activityController.getView());
+        screenContainer.addView(assistantController.getView());
+        screenContainer.addView(guardianController.getView());
+    }
 
-        findViewById(R.id.btn_simulate_banking_trojan).setOnClickListener(v -> runSimulation(true));
-        findViewById(R.id.btn_simulate_clean_apk).setOnClickListener(v -> runSimulation(false));
+    private void setupNavigation() {
+        navItemHome.setOnClickListener(v -> switchTab(NavigationTab.HOME, true));
+        navItemInsights.setOnClickListener(v -> switchTab(NavigationTab.INSIGHTS, true));
+        navItemActivity.setOnClickListener(v -> switchTab(NavigationTab.ACTIVITY, true));
+        navItemAssistant.setOnClickListener(v -> switchTab(NavigationTab.ASSISTANT, true));
+        navItemGuardian.setOnClickListener(v -> switchTab(NavigationTab.GUARDIAN, true));
+    }
 
-        btnInstallAction.setOnClickListener(v -> {
-            if (lastReport != null && lastReport.canSafelyProceedWithInstall()) {
-                var intentDesc = ApkInstallHandoffHelper.createSystemInstallIntent("content://dev.saathi.personal.fileprovider/scans/sample.apk");
-                Toast.makeText(this, "Handoff to System PackageInstaller: " + intentDesc.action, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Installation blocked: High threat severity detected.", Toast.LENGTH_LONG).show();
+    public void switchTab(NavigationTab targetTab, boolean addToStack) {
+        NavigationTab currentTab = AppState.get().getCurrentTab();
+        if (addToStack && currentTab != targetTab) {
+            navigationBackStack.push(currentTab);
+        }
+
+        AppState.get().setCurrentTab(targetTab);
+
+        // Trigger subtle tactile haptic feedback
+        performHaptic();
+
+        // Update Visibility of Screens
+        homeController.getView().setVisibility(targetTab == NavigationTab.HOME ? View.VISIBLE : View.GONE);
+        insightsController.getView().setVisibility(targetTab == NavigationTab.INSIGHTS ? View.VISIBLE : View.GONE);
+        activityController.getView().setVisibility(targetTab == NavigationTab.ACTIVITY ? View.VISIBLE : View.GONE);
+        assistantController.getView().setVisibility(targetTab == NavigationTab.ASSISTANT ? View.VISIBLE : View.GONE);
+        guardianController.getView().setVisibility(targetTab == NavigationTab.GUARDIAN ? View.VISIBLE : View.GONE);
+
+        // Refresh views
+        if (targetTab == NavigationTab.HOME) homeController.render();
+        else if (targetTab == NavigationTab.ACTIVITY) activityController.render();
+        else if (targetTab == NavigationTab.ASSISTANT) assistantController.render();
+        else if (targetTab == NavigationTab.GUARDIAN) guardianController.render();
+
+        // Update Bottom Nav Highlighting
+        updateNavHighlight(targetTab);
+    }
+
+    private void updateNavHighlight(NavigationTab tab) {
+        int activeColor = 0xFF00F5A0; // Neon Emerald
+        int inactiveColor = 0xFF64748B; // Slate Muted
+
+        ivNavHome.setColorFilter(tab == NavigationTab.HOME ? activeColor : inactiveColor);
+        tvNavHome.setTextColor(tab == NavigationTab.HOME ? activeColor : inactiveColor);
+
+        ivNavInsights.setColorFilter(tab == NavigationTab.INSIGHTS ? activeColor : inactiveColor);
+        tvNavInsights.setTextColor(tab == NavigationTab.INSIGHTS ? activeColor : inactiveColor);
+
+        ivNavActivity.setColorFilter(tab == NavigationTab.ACTIVITY ? activeColor : inactiveColor);
+        tvNavActivity.setTextColor(tab == NavigationTab.ACTIVITY ? activeColor : inactiveColor);
+
+        ivNavAssistant.setColorFilter(tab == NavigationTab.ASSISTANT ? activeColor : inactiveColor);
+        tvNavAssistant.setTextColor(tab == NavigationTab.ASSISTANT ? activeColor : inactiveColor);
+
+        ivNavGuardian.setColorFilter(tab == NavigationTab.GUARDIAN ? activeColor : inactiveColor);
+        tvNavGuardian.setTextColor(tab == NavigationTab.GUARDIAN ? activeColor : inactiveColor);
+    }
+
+    private void performHaptic() {
+        try {
+            if (vibrator != null && vibrator.hasVibrator()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(12, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    vibrator.vibrate(12);
+                }
             }
-        });
+        } catch (Exception ignored) {}
     }
 
-    private void toggleSeniorMode() {
-        isSeniorMode = !isSeniorMode;
-        float density = getResources().getDisplayMetrics().density;
-        if (isSeniorMode) {
-            btnToggleSenior.setText(isHindi ? "सीनियर मोड: चालू" : "Senior Mode: ON");
-            tvTitle.setTextSize(26);
-            tvVerdictAdvice.setTextSize(16);
-            btnCall1930.setTextSize(16);
-            btnCall1930.getLayoutParams().height = (int) (64 * density);
-            btnCall1930.requestLayout();
-        } else {
-            btnToggleSenior.setText(isHindi ? "सीनियर मोड: बंद" : "Senior Mode: OFF");
-            tvTitle.setTextSize(22);
-            tvVerdictAdvice.setTextSize(13);
-            btnCall1930.setTextSize(14);
-            btnCall1930.getLayoutParams().height = (int) (52 * density);
-            btnCall1930.requestLayout();
-        }
-        if (lastReport != null) {
-            renderReport(lastReport);
+    private void onAppStateChanged() {
+        NavigationTab tab = AppState.get().getCurrentTab();
+        // Check if tab changed externally
+        if (screenContainer != null) {
+            homeController.getView().setVisibility(tab == NavigationTab.HOME ? View.VISIBLE : View.GONE);
+            insightsController.getView().setVisibility(tab == NavigationTab.INSIGHTS ? View.VISIBLE : View.GONE);
+            activityController.getView().setVisibility(tab == NavigationTab.ACTIVITY ? View.VISIBLE : View.GONE);
+            assistantController.getView().setVisibility(tab == NavigationTab.ASSISTANT ? View.VISIBLE : View.GONE);
+            guardianController.getView().setVisibility(tab == NavigationTab.GUARDIAN ? View.VISIBLE : View.GONE);
+            updateNavHighlight(tab);
         }
     }
 
-    private void toggleLanguage() {
-        isHindi = !isHindi;
-        btnToggleLang.setText(isHindi ? "भाषा: हिन्दी" : "Language: English");
-        btnToggleSenior.setText(isSeniorMode ? (isHindi ? "सीनियर मोड: चालू" : "Senior Mode: ON") : (isHindi ? "सीनियर मोड: बंद" : "Senior Mode: OFF"));
-        
-        if (isHindi) {
-            tvSubtitle.setText("डिजिटल सुरक्षा के लिए आपका AI साथी");
-            tvHelplineTitle.setText("📞 राष्ट्रीय साइबर हेल्पलाइन (1930)");
-            tvHelplineDesc.setText("यदि किसी अनजान व्यक्ति ने आपको पैसे भेजने या OTP साझा करने को कहा है, तो तुरंत 1930 पर कॉल करें।");
-            btnCall1930.setText("तुरंत 1930 पर कॉल करें");
+    @Override
+    public void onBackPressed() {
+        if (!navigationBackStack.isEmpty()) {
+            NavigationTab previous = navigationBackStack.pop();
+            switchTab(previous, false);
         } else {
-            tvSubtitle.setText("Your AI Companion for Digital Safety");
-            tvHelplineTitle.setText("📞 National Cyber Crime Helpline (India)");
-            tvHelplineDesc.setText("If an unknown caller persuaded you to send money or share an OTP, dial 1930 immediately to freeze fraudulent bank transactions.");
-            btnCall1930.setText("Call 1930 Immediately");
+            super.onBackPressed();
         }
-
-        if (lastReport != null) {
-            renderReport(lastReport);
-        }
-    }
-
-    private void runSimulation(boolean isTrojan) {
-        byte[] apkBytes;
-        String name;
-
-        if (isTrojan) {
-            name = "QuickBank_Update_Trojan.apk";
-            apkBytes = createSyntheticApk(
-                    "com.fake.quickbank",
-                    "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" package=\"com.fake.quickbank\">\n" +
-                    "    <uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\" />\n" +
-                    "    <uses-permission android:name=\"android.permission.INTERNET\" />\n" +
-                    "    <application>\n" +
-                    "        <service android:name=\".ATS\" android:permission=\"android.permission.BIND_ACCESSIBILITY_SERVICE\" />\n" +
-                    "    </application>\n" +
-                    "</manifest>",
-                    true
-            );
-        } else {
-            name = "CleanCalculator.apk";
-            apkBytes = createSyntheticApk(
-                    "com.simple.calculator",
-                    "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" package=\"com.simple.calculator\">\n" +
-                    "    <application>\n" +
-                    "        <activity android:name=\".Main\">\n" +
-                    "            <intent-filter>\n" +
-                    "                <action android:name=\"android.intent.action.MAIN\" />\n" +
-                    "                <category android:name=\"android.intent.category.LAUNCHER\" />\n" +
-                    "            </intent-filter>\n" +
-                    "        </activity>\n" +
-                    "    </application>\n" +
-                    "</manifest>",
-                    false
-            );
-        }
-
-        lastReport = apkEngine.analyzeApk(name, new ByteArrayInputStream(apkBytes), apkBytes.length);
-        renderReport(lastReport);
-    }
-
-    private void renderReport(ApkAnalysisReport report) {
-        if (report.getVerdict() == ScanVerdict.HIGH_RISK || report.getVerdict() == ScanVerdict.KNOWN_MALICIOUS) {
-            tvVerdictBadge.setBackgroundColor(0xFFB91C1C); // Red
-            tvVerdictBadge.setText(isHindi ? "ख़तरा: अत्यधिक जोखिम" : "VERDICT: HIGH RISK");
-            tvVerdictAdvice.setText(isHindi ? HindiExplanationSynthesizer.explainApkInHindi(report) : report.getPlainLanguageExplanation());
-            btnInstallAction.setEnabled(false);
-            btnInstallAction.setAlpha(0.4f);
-            btnInstallAction.setText(isHindi ? "इंस्टॉलेशन अस्वीकृत (ख़तरा)" : "Installation Blocked (Threat)");
-        } else {
-            tvVerdictBadge.setBackgroundColor(0xFF047857); // Green
-            tvVerdictBadge.setText(isHindi ? "जांच: कोई ख़तरा नहीं मिला" : "VERDICT: NO KNOWN THREAT");
-            tvVerdictAdvice.setText(isHindi ? HindiExplanationSynthesizer.explainApkInHindi(report) : report.getPlainLanguageExplanation());
-            btnInstallAction.setEnabled(true);
-            btnInstallAction.setAlpha(1.0f);
-            btnInstallAction.setText(isHindi ? "सिस्टम इंस्टॉलर के जरिए आगे बढ़ें" : "Proceed via System Installer");
-        }
-
-        StringBuilder ev = new StringBuilder("Evidence: ");
-        if (report.getIndicators().isEmpty()) {
-            ev.append("None (Clean static baseline)");
-        } else {
-            for (ThreatIndicator ti : report.getIndicators()) {
-                ev.append("• ").append(ti.getTitle()).append(" ");
-            }
-        }
-        tvVerdictEvidence.setText(ev.toString());
     }
 
     private void handleIncomingIntent(Intent intent) {
@@ -264,37 +255,25 @@ public class MainActivity extends Activity {
             try {
                 InputStream is = getContentResolver().openInputStream(data);
                 if (is != null) {
-                    lastReport = apkEngine.analyzeApk("downloaded_package.apk", is, 0);
-                    renderReport(lastReport);
+                    ApkAnalysisReport report = AppState.get().getApkEngine().analyzeApk("downloaded_package.apk", is, 0);
+
+                    ActivityEvent event = new ActivityEvent(
+                            "evt-" + System.currentTimeMillis(),
+                            new Date(),
+                            ActivityEvent.EventCategory.APK,
+                            report.getVerdict() == ScanVerdict.KNOWN_MALICIOUS ? ThreatSeverity.CRITICAL : ThreatSeverity.INFO,
+                            (report.getVerdict() == ScanVerdict.KNOWN_MALICIOUS ? "🚨 Intercepted Trojan APK: " : "✅ Clean APK Verified: ") + report.getFileName(),
+                            report.getPlainLanguageExplanation(),
+                            List.of("Verdict: " + report.getVerdict().getDisplayName(), "SHA256: " + report.getSha256Checksum()),
+                            report.canSafelyProceedWithInstall() ? "Proceed with Install" : "Quarantine & Delete"
+                    );
+
+                    AppState.get().addActivityEvent(event);
+                    DetailSheetDialog.showEventDetails(this, event);
                 }
             } catch (Exception e) {
-                Toast.makeText(this, "Could not open APK stream: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Could not open APK: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-    private byte[] createSyntheticApk(String pkg, String xml, boolean trojan) {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ZipOutputStream zos = new ZipOutputStream(baos);
-            zos.putNextEntry(new ZipEntry("AndroidManifest.xml"));
-            zos.write(xml.getBytes(StandardCharsets.UTF_8));
-            zos.closeEntry();
-
-            zos.putNextEntry(new ZipEntry("classes.dex"));
-            byte[] dex = new byte[256];
-            dex[0] = 'd'; dex[1] = 'e'; dex[2] = 'x'; dex[3] = '\n';
-            dex[4] = '0'; dex[5] = '3'; dex[6] = '5'; dex[7] = 0;
-            if (trojan) {
-                byte[] sig = "findAccessibilityNodeInfosByViewId".getBytes(StandardCharsets.UTF_8);
-                System.arraycopy(sig, 0, dex, 120, sig.length);
-            }
-            zos.write(dex);
-            zos.closeEntry();
-            zos.close();
-            return baos.toByteArray();
-        } catch (Exception e) {
-            return new byte[0];
         }
     }
 }

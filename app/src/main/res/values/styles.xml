@@ -1,12 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dark AMOLED optimized theme for iQOO 15 2K+ display -->
+    <!-- Dark AMOLED CRED-Inspired Theme for iQOO 15 (144Hz LTPO, 1440x3168) -->
     <style name="Theme.Saathi" parent="android:Theme.Material.NoActionBar">
-        <item name="android:colorPrimary">@color/primary</item>
-        <item name="android:colorPrimaryDark">@color/primary_dark</item>
-        <item name="android:colorAccent">@color/accent</item>
-        <item name="android:windowBackground">@color/background_dark</item>
-        <item name="android:navigationBarColor">@color/background_dark</item>
-        <item name="android:statusBarColor">@color/background_dark</item>
+        <item name="android:colorPrimary">@color/neon_emerald</item>
+        <item name="android:colorPrimaryDark">@color/bg_obsidian</item>
+        <item name="android:colorAccent">@color/cyber_cyan</item>
+        <item name="android:windowBackground">@color/bg_obsidian</item>
+        <item name="android:navigationBarColor">@color/bg_obsidian</item>
+        <item name="android:statusBarColor">@color/bg_obsidian</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 </resources>

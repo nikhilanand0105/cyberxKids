@@ -1,11 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#4F46E5</color>
-    <color name="primary_dark">#3730A3</color>
-    <color name="accent">#F59E0B</color>
-    <color name="background_dark">#0F172A</color>
-    <color name="surface_card">#1E293B</color>
-    <color name="text_white">#F8FAFC</color>
+    <!-- CRED-Inspired Luxury Noir Palette -->
+    <!-- Surfaces -->
+    <color name="bg_obsidian">#05070B</color>
+    <color name="bg_void">#080C14</color>
+    <color name="surface_charcoal">#0E1420</color>
+    <color name="surface_card">#121927</color>
+    <color name="surface_elevated">#172235</color>
+    <color name="surface_interactive">#1D2A42</color>
+
+    <!-- Borders & Dividers -->
+    <color name="border_subtle">#1E2C42</color>
+    <color name="border_medium">#2B3D5B</color>
+    <color name="border_active">#3B82F6</color>
+
+    <!-- High-Voltage CRED Accents -->
+    <color name="neon_emerald">#00F5A0</color>
+    <color name="neon_emerald_dim">#1A00F5A0</color>
+    <color name="emerald_surface">#062D20</color>
+
+    <color name="cyber_cyan">#00D9F5</color>
+    <color name="cyber_cyan_dim">#1A00D9F5</color>
+    <color name="cyan_surface">#042633</color>
+
+    <color name="electric_purple">#8B5CF6</color>
+    <color name="electric_purple_dim">#1A8B5CF6</color>
+    <color name="purple_surface">#22163B</color>
+
+    <color name="warning_amber">#F59E0B</color>
+    <color name="warning_amber_dim">#1AF59E0B</color>
+    <color name="amber_surface">#3D2504</color>
+
+    <color name="alert_crimson">#FF3B30</color>
+    <color name="alert_crimson_dim">#1AFF3B30</color>
+    <color name="crimson_surface">#3B0D0B</color>
+
+    <!-- Typography -->
+    <color name="text_pure_white">#FFFFFF</color>
+    <color name="text_platinum">#E2E8F0</color>
+    <color name="text_slate">#94A3B8</color>
+    <color name="text_muted_blue">#64748B</color>
+    <color name="text_dim">#475569</color>
+
+    <!-- Legacy aliases for backward compatibility -->
+    <color name="primary">#8B5CF6</color>
+    <color name="primary_dark">#05070B</color>
+    <color name="accent">#00F5A0</color>
+    <color name="background_dark">#05070B</color>
+    <color name="text_white">#FFFFFF</color>
     <color name="text_muted">#94A3B8</color>
-    <color name="danger">#EF4444</color>
-    <color name="success">#10B981</color>
+    <color name="danger">#FF3B30</color>
+    <color name="success">#00F5A0</color>
 </resources>
