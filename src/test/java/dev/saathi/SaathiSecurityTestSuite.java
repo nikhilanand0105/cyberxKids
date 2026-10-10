@@ -27,6 +27,10 @@ public class SaathiSecurityTestSuite {
         testBinaryXmlParser();
         testBankingTrojanRule();
         testOtpStealerRule();
+        testScreenShareRule();
+        testTollFraudRule();
+        testLocalStorageRetention();
+        testInstallHandoff();
         testVerdictDetermination();
         testHinglishSenseEngine();
 
@@ -35,6 +39,56 @@ public class SaathiSecurityTestSuite {
             System.err.println("Some tests failed!");
             System.exit(1);
         }
+    }
+
+    private static void testScreenShareRule() {
+        startTest("ScreenShareAbuseRule triggers on repackaged AnyDesk/QuickSupport");
+        dev.saathi.rules.ScreenShareAbuseRule rule = new dev.saathi.rules.ScreenShareAbuseRule();
+        ManifestMetadata manifest = new ManifestMetadata(
+                "com.anydesk.anydeskandroid.fake", "1.0", 1, 21, 33,
+                Set.of(), List.of(), List.of(), List.of(),
+                false, false, true
+        );
+        CertificateMetadata cert = new CertificateMetadata(
+                "CN=Android Debug", "CN=Android Debug", "1", "HASH", new java.util.Date(), new java.util.Date(), true, true, false
+        );
+        List<ThreatIndicator> ind = rule.evaluate(manifest, null, cert, null);
+        assertFalse(ind.isEmpty(), "Should detect repackaged tool");
+        assertEquals("REPACKAGED_REMOTE_CONTROL_TOOL", ind.get(0).getId());
+        pass();
+    }
+
+    private static void testTollFraudRule() {
+        startTest("TollFraudSmsRule triggers on SEND_SMS + READ_PHONE_STATE + INTERNET");
+        dev.saathi.rules.TollFraudSmsRule rule = new dev.saathi.rules.TollFraudSmsRule();
+        ManifestMetadata manifest = new ManifestMetadata(
+                "com.toll.stealth", "1.0", 1, 21, 33,
+                Set.of("android.permission.SEND_SMS", "android.permission.READ_PHONE_STATE", "android.permission.INTERNET"),
+                List.of(), List.of(), List.of(),
+                false, false, true
+        );
+        List<ThreatIndicator> ind = rule.evaluate(manifest, null, null, null);
+        assertFalse(ind.isEmpty(), "Should detect toll fraud cluster");
+        assertEquals("TOLL_FRAUD_INDICATOR_CLUSTER", ind.get(0).getId());
+        pass();
+    }
+
+    private static void testLocalStorageRetention() {
+        startTest("LocalStorageRepository prunes records exceeding retention days");
+        dev.saathi.storage.LocalStorageRepository repo = new dev.saathi.storage.LocalStorageRepository();
+        repo.setRetentionDays(14);
+        repo.recordScan("test1.apk", "hash1", ScanVerdict.NO_KNOWN_THREAT_DETECTED, 0, "CANCELLED");
+        assertEquals(1, repo.getAllScanRecords().size());
+        pass();
+    }
+
+    private static void testInstallHandoff() {
+        startTest("ApkInstallHandoffHelper builds valid system install intent without REQUEST_INSTALL_PACKAGES");
+        var intent = dev.saathi.engine.ApkInstallHandoffHelper.createSystemInstallIntent("content://dev.saathi/scans/app.apk");
+        assertEquals("android.intent.action.VIEW", intent.action);
+        assertEquals("application/vnd.android.package-archive", intent.mimeType);
+        assertTrue((intent.flags & dev.saathi.engine.ApkInstallHandoffHelper.FLAG_GRANT_READ_URI_PERMISSION) != 0, "Has grant read permission");
+        pass();
     }
 
     private static void testBinaryXmlParser() {

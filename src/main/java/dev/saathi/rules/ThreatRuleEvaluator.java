@@ -19,6 +19,8 @@ public class ThreatRuleEvaluator {
         registeredRules.add(new DropperRansomwareRule());
         registeredRules.add(new SpywareSurveillanceRule());
         registeredRules.add(new CertificateRiskRule());
+        registeredRules.add(new ScreenShareAbuseRule());
+        registeredRules.add(new TollFraudSmsRule());
 
         // Known malware samples for reputation matching (e.g. Cerberus, Flubot, Sharkbot hashes)
         knownMaliciousHashes.add("3a019b88f8d2dfbb187b47b4d187bdf559ef14c1d686f0b4d45543c8d1720d29");
