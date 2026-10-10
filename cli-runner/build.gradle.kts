@@ -1,14 +1,13 @@
 plugins {
-    kotlin("jvm")
     application
+    kotlin("jvm")
 }
 
 application {
-    mainClass.set("dev.saathi.cli.MainKt")
+    mainClass.set("dev.saathi.cli.Main")
 }
 
 dependencies {
-    implementation(project(":core-apk-intelligence"))
-    implementation(project(":core-sense"))
+    implementation(project(":core"))
     testImplementation(kotlin("test"))
 }

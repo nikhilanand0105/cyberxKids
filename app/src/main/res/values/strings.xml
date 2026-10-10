@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Saathi</string>
+    <string name="senior_mode_title">Senior Mode (Accessible)</string>
+    <string name="helpline_1930">Call 1930 Helpline</string>
+    <string name="scan_apk_button">Scan Downloaded APK</string>
+    <string name="verdict_clean">No Known Threat Detected</string>
+    <string name="verdict_high_risk">High Risk - Do Not Install</string>
+</resources>

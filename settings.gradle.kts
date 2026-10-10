@@ -1,5 +1,21 @@
-rootProject.name = "saathi-engine"
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 
-include(":core-apk-intelligence")
-include(":core-sense")
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "saathi"
+
+include(":core")
+include(":app")
 include(":cli-runner")
