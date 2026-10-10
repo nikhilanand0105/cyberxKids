@@ -33,12 +33,61 @@ public class SaathiSecurityTestSuite {
         testInstallHandoff();
         testVerdictDetermination();
         testHinglishSenseEngine();
+        testPhishingScanner();
+        testLocalFirewall();
+        testHindiSynthesizer();
+        testApkScannerViewModel();
 
         System.out.printf("\nTest Results: %d/%d tests PASSED.%n", testsPassed, testsRun);
         if (testsPassed != testsRun) {
             System.err.println("Some tests failed!");
             System.exit(1);
         }
+    }
+
+    private static void testPhishingScanner() {
+        startTest("PhishingUrlScanner flags banking impersonation and raw IP URLs");
+        dev.saathi.shield.network.PhishingUrlScanner scanner = new dev.saathi.shield.network.PhishingUrlScanner();
+
+        var r1 = scanner.scanUrl("http://sbi-online-kyc-update.xyz/login");
+        assertEquals(dev.saathi.shield.network.PhishingUrlScanner.UrlRiskLevel.KNOWN_PHISHING, r1.riskLevel);
+
+        var r2 = scanner.scanUrl("http://192.168.1.50/pay");
+        assertEquals(dev.saathi.shield.network.PhishingUrlScanner.UrlRiskLevel.KNOWN_PHISHING, r2.riskLevel);
+
+        var r3 = scanner.scanUrl("https://onlinesbi.sbi");
+        assertEquals(dev.saathi.shield.network.PhishingUrlScanner.UrlRiskLevel.SAFE_REPUTATION, r3.riskLevel);
+        pass();
+    }
+
+    private static void testLocalFirewall() {
+        startTest("LocalFirewallEngine destination filtering and transfer anomaly checks");
+        dev.saathi.shield.network.LocalFirewallEngine fw = new dev.saathi.shield.network.LocalFirewallEngine();
+        assertTrue(fw.shouldBlockConnection("phishing-sbi-portal.xyz", 443), "Blocks malicious host");
+        assertFalse(fw.shouldBlockConnection("google.com", 443), "Allows clean host");
+
+        boolean anomaly = fw.checkAnomalousBackgroundTransfer("com.suspicious.app", 80_000_000L);
+        assertTrue(anomaly, "Flags anomalous high-volume background data transfer");
+        pass();
+    }
+
+    private static void testHindiSynthesizer() {
+        startTest("HindiExplanationSynthesizer generates plain Hindi guidance for elders");
+        dev.saathi.shield.network.PhishingUrlScanner scanner = new dev.saathi.shield.network.PhishingUrlScanner();
+        var phishingResult = scanner.scanUrl("http://sbi-fake-kyc.biz");
+        String hindiAdvice = dev.saathi.ai.HindiExplanationSynthesizer.explainPhishingLinkInHindi(phishingResult);
+        assertTrue(hindiAdvice.contains("1930"), "Contains 1930 Helpline in Hindi");
+        assertTrue(hindiAdvice.contains("UPI PIN"), "Contains UPI PIN warning");
+        pass();
+    }
+
+    private static void testApkScannerViewModel() {
+        startTest("ApkScannerViewModel state management and Senior Mode toggle");
+        dev.saathi.ui.viewmodel.ApkScannerViewModel vm = new dev.saathi.ui.viewmodel.ApkScannerViewModel(null, null);
+        assertFalse(vm.getCurrentState().isSeniorModeActive(), "Starts with Standard Mode");
+        vm.setSeniorMode(true);
+        assertTrue(vm.getCurrentState().isSeniorModeActive(), "Enables Senior Mode");
+        pass();
     }
 
     private static void testScreenShareRule() {
