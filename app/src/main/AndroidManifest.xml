@@ -5,39 +5,27 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- Optional location only for emergency SOS dispatch -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- Phone dialer permission for Helpline 1930 quick action in Senior Mode -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <!-- Haptic feedback for tactile CRED navigation interactions -->
+    <!-- Tactile feedback for friendly navigation interactions -->
     <uses-permission android:name="android.permission.VIBRATE" />
-
-    <!-- 
-      iQOO 15 Optimization: 64-bit arm64-v8a target.
-      We deliberately OMIT REQUEST_INSTALL_PACKAGES to comply with Google Play Policy.
-      Saathi delegates package installation to Android's native PackageInstaller via Intent.ACTION_VIEW.
-    -->
 
     <application
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:largeHeap="true"
-        android:label="Saathi"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Saathi">
 
-        <!-- Support 22:10 ultra-tall display on iQOO 15 (1440x3168) -->
+        <!-- Support 22:10 display on iQOO 15 (1440x3168) -->
         <meta-data
             android:name="android.max_aspect"
             android:value="2.5" />
 
-        <!-- Main Home & Live Scanner Activity -->
+        <!-- Saathi Kids Main Entry Point -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name="dev.saathi.kids.ui.MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize|screenLayout|density"
             android:windowSoftInputMode="adjustResize">
 
@@ -47,7 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- 1. Intercept "Open With" for downloaded APK files -->
+            <!-- 1. Intercept "Open With" for downloaded files -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -57,19 +45,24 @@
                 <data android:mimeType="application/vnd.android.package-archive" />
             </intent-filter>
 
-            <!-- 2. Intercept "Share via Saathi" from Chrome, WhatsApp, Files -->
+            <!-- 2. Intercept "Share via Saathi Kids" (APKs and text/links) -->
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/vnd.android.package-archive" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
 
         </activity>
 
         <!-- Secure Scoped Storage FileProvider -->
         <provider
-            android:name="dev.saathi.personal.provider.SaathiFileProvider"
-            android:authorities="dev.saathi.personal.fileprovider"
+            android:name="dev.saathi.kids.provider.SaathiFileProvider"
+            android:authorities="dev.saathi.kids.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

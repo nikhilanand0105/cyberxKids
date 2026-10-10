@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    namespace = "dev.saathi.personal"
+    namespace = "dev.saathi.kids"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "dev.saathi.personal"
+        applicationId = "dev.saathi.kids"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0.0-iqoo15"
+        versionName = "1.0.0-kids"
 
         // Hardware optimization for iQOO 15:
         // Qualcomm Snapdragon 8 Elite (SM8850) is 64-bit ONLY.

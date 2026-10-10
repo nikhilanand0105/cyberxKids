@@ -1,4 +1,4 @@
-package dev.saathi.personal.provider;
+package dev.saathi.kids.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
  */
 public class SaathiFileProvider extends ContentProvider {
 
-    public static final String AUTHORITY = "dev.saathi.personal.fileprovider";
+    public static final String AUTHORITY = "dev.saathi.kids.fileprovider";
 
     @Override
     public boolean onCreate() {
