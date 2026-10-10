@@ -105,15 +105,15 @@ public class MainActivity extends Activity implements
         setupScreenControllers();
         setupNavigation();
 
-        // Handle incoming shared intent
-        handleIncomingIntent(getIntent());
-
         // Check if first-launch onboarding is needed
         if (!KidsAppState.getInstance().isOnboardingCompleted()) {
             showOnboarding();
         } else {
             switchTab(NavigationTab.HOME, false);
         }
+
+        // Handle incoming shared intent after initial screen setup
+        handleIncomingIntent(getIntent());
     }
 
     private void optimizeDisplayForIqoo15() {
@@ -323,7 +323,21 @@ public class MainActivity extends Activity implements
                         checkController.setPastedText(sharedText);
                     }
                 }
+            } else {
+                Uri streamUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                if (streamUri != null) {
+                    switchTab(NavigationTab.CHECK, true);
+                    String name = streamUri.getLastPathSegment();
+                    if (name == null) name = streamUri.toString();
+                    checkController.setFileToCheck(name);
+                }
             }
+        } else if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null) {
+            Uri dataUri = intent.getData();
+            String name = dataUri.getLastPathSegment();
+            if (name == null) name = dataUri.toString();
+            switchTab(NavigationTab.CHECK, true);
+            checkController.setFileToCheck(name);
         }
     }
 

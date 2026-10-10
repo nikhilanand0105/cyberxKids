@@ -101,6 +101,14 @@ public class CheckScreenController {
         }
     }
 
+    public void setFileToCheck(String fileName) {
+        setMode(2);
+        if (etInput != null) {
+            etInput.setText(fileName);
+            runCheck(fileName);
+        }
+    }
+
     private void createView() {
         rootView = new ScrollView(activity);
         rootView.setLayoutParams(new ViewGroup.LayoutParams(
